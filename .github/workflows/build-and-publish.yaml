@@ -7,26 +7,17 @@ on:
     branches: ["main"]
 
 jobs:
-  clone:
-    name: Clone repository
+  build_and_push_to_registry:
+    name: Push image to Docker Hub
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
         with:
           repository: microsoft/CloudAdoptionFramework
           path: "./"
 
-  build_and_push_to_registry:
-    name: Push image to Docker Hub
-    runs-on: ubuntu-latest
-    needs: clone
-
-    defaults:
-      run:
-        working-directory: "./ready/AzNamingTool"
-
-    steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -36,12 +27,14 @@ jobs:
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v3
+        working-directory: "./ready/AzNamingTool"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           images: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_REPOSITORY }}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
+        working-directory: "./ready/AzNamingTool"
         with:
           context: .
           push: true
