@@ -27,16 +27,15 @@ jobs:
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v3
-        working-directory: "./ready/AzNamingTool"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           images: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_REPOSITORY }}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
-        working-directory: "./ready/AzNamingTool"
         with:
-          context: .
+          file: ready/AzNamingTool/Dockerfile
+          context: ./ready/AzNamingTool
           push: true
           tags: latest
           labels: ${{ steps.meta.outputs.labels }}
