@@ -37,5 +37,5 @@ jobs:
           file: ready/AzNamingTool/Dockerfile
           context: ./ready/AzNamingTool
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_REPOSITORY }}:latest
+          tags: tfisicaro/aznamingtool:latest
           labels: ${{ steps.meta.outputs.labels }}
