@@ -20,6 +20,11 @@ jobs:
           repository: microsoft/CloudAdoptionFramework
           path: "./"
 
+      - uses: kzrnm/get-net-sdk-project-versions-action@v1
+        id: get-version
+        with:
+          proj-path: ready/AzNamingTool/AzNamingTool.csproj
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -39,5 +44,5 @@ jobs:
           file: ready/AzNamingTool/Dockerfile
           context: ./ready/AzNamingTool
           push: true
-          tags: tfisicaro/aznamingtool:latest
+          tags: tfisicaro/aznamingtool:latest, tfisicaro/aznamingtool:v${{steps.get-version.outputs.version}}
           labels: ${{ steps.meta.outputs.labels }}
