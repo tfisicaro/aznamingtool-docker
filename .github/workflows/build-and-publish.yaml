@@ -1,6 +1,8 @@
 name: Build AzNamingTool and push to Docker Hub
 
 on:
+  schedule:
+  - cron: "0 0 * * *"
   push:
     branches: ["main"]
   pull_request:
