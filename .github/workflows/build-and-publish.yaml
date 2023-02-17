@@ -37,5 +37,5 @@ jobs:
           file: ready/AzNamingTool/Dockerfile
           context: ./ready/AzNamingTool
           push: true
-          tags: latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_REPOSITORY }}:latest
           labels: ${{ steps.meta.outputs.labels }}
