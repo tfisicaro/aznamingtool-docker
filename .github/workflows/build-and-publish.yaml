@@ -18,13 +18,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          repository: microsoft/CloudAdoptionFramework
+          repository: mspnp/AzureNamingTool
           path: "./"
 
       - uses: kzrnm/get-net-sdk-project-versions-action@v1
         id: get-version
         with:
-          proj-path: ready/AzNamingTool/AzureNamingTool.csproj
+          proj-path: src/AzureNamingTool.csproj
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -42,8 +42,8 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
-          file: ready/AzNamingTool/Dockerfile
-          context: ./ready/AzNamingTool
+          file: src/Dockerfile
+          context: ./src
           push: true
           tags: tfisicaro/aznamingtool:latest, tfisicaro/aznamingtool:v${{steps.get-version.outputs.version}}
           labels: ${{ steps.meta.outputs.labels }}
